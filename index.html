@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Actividades</title>
+    <meta name="description" content="Sistema integral para gestión y seguimiento de actividades empresariales">
+    <meta name="author" content="Sistema de Gestión">
+    
+    <!-- Favicon personalizado -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik04IDEySDI0VjE0SDhWMTJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNOCAxNkgyNFYxOEg4VjE2WiIgZmlsbD0id2hpdGUiLz4KPHA+aCBkPSJNOCAyMEgyNFYyMkg4VjIwWiIgZmlsbD0id2hpdGUiLz4KPHA+aCBkPSJNNiAxMC41QzYgOS42NzE1NyA2LjY3MTU3IDkgNy41IDlDOC4zMjg0MyA5IDkgOS42NzE1NyA5IDEwLjVDOSAxMS4zMjg0IDguMzI4NDMgMTIgNy41IDEyQzYuNjcxNTcgMTIgNiAxMS4zMjg0IDYgMTAuNVoiIGZpbGw9IiNmZmZmZmYiLz4KPHA+aCBkPSJNNiAxNC41QzYgMTMuNjcxNiA2LjY3MTU3IDEzIDcuNSAxM0M4LjMyODQzIDEzIDkgMTMuNjcxNiA5IDE0LjVDOSAxNS4zMjg0IDguMzI4NDMgMTYgNy41IDE2QzYuNjcxNTcgMTYgNiAxNS4zMjg0IDYgMTQuNVoiIGZpbGw9IiNmZmZmZmYiLz4KPHA+aCBkPSJNNiAxOC41QzYgMTcuNjcxNiA2LjY3MTU3IDE3IDcuNSAxN0M4LjMyODQzIDE3IDkgMTcuNjcxNiA5IDE4LjVDOSAxOS4zMjg0IDguMzI4NDMgMjAgNy41IDIwQzYuNjcxNTcgMjAgNiAxOS4zMjg0IDYgMTguNVoiIGZpbGw9IiNmZmZmZmYiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwIiB4MT0iMCIgeTE9IjAiIHgyPSIzMiIgeTI9IjMyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiMxNjQzN2QiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMjA1MTkyIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHN2Zz4K">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .login-container {
+            background: linear-gradient(135deg, #16437d 0%, #1e4a87 15%, #205192 30%, #2859a1 45%, #3060b0 60%, #3868bf 75%, #4070ce 90%, #4878dd 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(22, 67, 125, 0.8) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(32, 81, 146, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(40, 89, 161, 0.4) 0%, transparent 70%);
+            animation: floatingBg 30s ease-in-out infinite;
+        }
+        
+        @keyframes floatingBg {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            25% { transform: scale(1.05) rotate(0.5deg); opacity: 0.9; }
+            50% { transform: scale(0.98) rotate(-0.5deg); opacity: 0.8; }
+            75% { transform: scale(1.02) rotate(0.3deg); opacity: 0.9; }
+        }
+        
+        .dashboard-container {
+            background: linear-gradient(135deg, #f8faff 0%, #f0f6fe 12%, #e8f2fd 25%, #deedfb 37%, #d4e9fa 50%, #cae5f9 62%, #c0e1f8 75%, #b6dcf7 87%, #acd8f6 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(22, 67, 125, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(32, 81, 146, 0.06) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(40, 89, 161, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(32, 81, 146, 0.12);
+            box-shadow: 
+                0 25px 50px -12px rgba(22, 67, 125, 0.18),
+                0 15px 35px -10px rgba(32, 81, 146, 0.12),
+                0 5px 15px -3px rgba(40, 89, 161, 0.08),
+                0 0 0 1px rgba(32, 81, 146, 0.06);
+        }
+        
+        .status-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .status-pendiente {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 50%, #fca5a5 100%);
+            color: #b91c1c;
+            border: 1px solid #f87171;
+        }
+        
+        .status-progreso {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%);
+            color: #b45309;
+            border: 1px solid #f59e0b;
+        }
+        
+        .status-completada {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
+            color: #15803d;
+            border: 1px solid #22c55e;
+        }
+        
+        .animated-button {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #16437d 0%, #1e4a87 20%, #205192 40%, #2859a1 60%, #3060b0 80%, #3868bf 100%);
+            box-shadow: 0 8px 25px 0 rgba(32, 81, 146, 0.35);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(32, 81, 146, 0.45);
+            background: linear-gradient(135deg, #1e4a87 0%, #205192 20%, #2859a1 40%, #3060b0 60%, #3868bf 80%, #4070ce 100%);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #9333ea 0%, #a855f7 50%, #c084fc 100%);
+            box-shadow: 0 8px 25px 0 rgba(147, 51, 234, 0.35);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(147, 51, 234, 0.45);
+            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a78bfa 100%);
+        }
+        
+        .btn-tertiary {
+            background: linear-gradient(135deg, #059669 0%, #10b981 30%, #34d399 60%, #6ee7b7 100%);
+            box-shadow: 0 8px 25px 0 rgba(5, 150, 105, 0.35);
+        }
+        
+        .btn-tertiary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.45);
+            background: linear-gradient(135deg, #047857 0%, #059669 30%, #10b981 60%, #34d399 100%);
+        }
+        
+        .task-row {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .task-row:hover {
+            background: linear-gradient(135deg, rgba(32, 81, 146, 0.04) 0%, rgba(40, 89, 161, 0.06) 50%, rgba(48, 96, 176, 0.04) 100%);
+            border-left-color: #205192;
+            transform: translateX(8px);
+        }
+        
+        .completed-task-row {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(21, 128, 61, 0.03) 100%);
+            border-left-color: #22c55e !important;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .pulse {
+            animation: pulse 2.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal {
+            backdrop-filter: blur(15px);
+            background: rgba(22, 67, 125, 0.4);
+        }
+        
+        .priority-high {
+            border-left-color: #dc2626 !important;
+            border-left-width: 4px;
+        }
+        
+        .priority-medium {
+            border-left-color: #d97706 !important;
+            border-left-width: 4px;
+        }
+        
+        .priority-low {
+            border-left-color: #059669 !important;
+            border-left-width: 4px;
+        }
+        
+        .blue-gradient-icon {
+            background: linear-gradient(135deg, #16437d 0%, #1e4a87 25%, #205192 50%, #2859a1 75%, #3060b0 100%);
+            box-shadow: 0 10px 30px rgba(32, 81, 146, 0.4);
+        }
+        
+        .blue-gradient-bg {
+            background: linear-gradient(135deg, #16437d 0%, #1e4a87 20%, #205192 40%, #2859a1 60%, #3060b0 80%, #3868bf 100%);
+        }
+        
+        .header-shadow {
+            box-shadow: 0 8px 32px -4px rgba(32, 81, 146, 0.18);
+        }
+        
+        .floating-element {
+            animation: floating 10s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            20% { transform: translate(12px, -15px) rotate(0.8deg); }
+            40% { transform: translate(-8px, -12px) rotate(-0.5deg); }
+            60% { transform: translate(-12px, 8px) rotate(0.3deg); }
+            80% { transform: translate(8px, 12px) rotate(-0.3deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 255, 0.9) 30%, rgba(240, 246, 254, 0.85) 70%, rgba(235, 242, 253, 0.8) 100%);
+            border: 1px solid rgba(32, 81, 146, 0.12);
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(32, 81, 146, 0.2);
+            border-color: rgba(32, 81, 146, 0.2);
+        }
+        
+        .icon-blue {
+            color: #205192;
+        }
+        
+        .blue-text {
+            color: #16437d;
+        }
+        
+        .gray-text {
+            color: #374151;
+        }
+        
+        .blue-hover:hover {
+            background-color: rgba(32, 81, 146, 0.1);
+        }
+        
+        .completed-section {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.06) 0%, rgba(21, 128, 61, 0.04) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .icon-glow {
+            filter: drop-shadow(0 4px 8px rgba(32, 81, 146, 0.3));
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de Login -->
+    <div id="loginScreen" class="login-container flex items-center justify-center relative z-10">
+        <div class="card rounded-3xl p-12 w-full max-w-lg mx-4 relative z-20">
+            <div class="text-center mb-12">
+                <div class="mx-auto w-24 h-24 blue-gradient-icon rounded-3xl flex items-center justify-center mb-8 floating-element icon-glow">
+                    <i class="fas fa-tasks text-white text-4xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold gray-text mb-4">Sistema de Gestión de Actividades</h1>
+                <p class="text-gray-600 text-lg">Ingrese la contraseña para acceder al sistema</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-8">
+                <div>
+                    <label class="block text-sm font-semibold gray-text mb-4">Contraseña de Acceso</label>
+                    <div class="relative">
+                        <input type="password" id="passwordInput" 
+                               class="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 text-lg"
+                               placeholder="Ingrese la contraseña" required>
+                        <i class="fas fa-lock absolute right-5 top-5 text-gray-400 text-lg"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" 
+                        class="animated-button btn-primary w-full text-white py-5 px-8 rounded-2xl font-semibold text-lg focus:outline-none focus:ring-4 focus:ring-blue-300">
+                    <i class="fas fa-sign-in-alt mr-3"></i>
+                    Ingresar al Sistema
+                </button>
+            </form>
+            
+            <div id="loginError" class="hidden mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-xl">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                Contraseña incorrecta. Intente nuevamente.
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Principal -->
+    <div id="dashboard" class="hidden dashboard-container relative z-10">
+        <!-- Header -->
+        <header class="bg-white header-shadow border-b border-gray-200 relative z-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-6">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 blue-gradient-icon rounded-xl flex items-center justify-center mr-4 icon-glow">
+                            <i class="fas fa-tasks text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold gray-text">Sistema de Gestión de Actividades</h1>
+                            <p class="text-sm text-gray-500">Control y seguimiento en tiempo real</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="pulse w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span class="text-sm text-gray-600 font-medium">En línea</span>
+                        <button onclick="logout()" class="text-gray-500 hover:text-red-600 transition-colors p-2 rounded-lg blue-hover">
+                            <i class="fas fa-sign-out-alt text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-20">
+            <!-- Estadísticas en tiempo real -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="stats-card rounded-2xl p-6 backdrop-filter backdrop-blur-lg">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-list-ul icon-blue text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total Tareas</p>
+                            <p id="totalTasks" class="text-3xl font-bold blue-text">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-card rounded-2xl p-6 backdrop-filter backdrop-blur-lg">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-clock text-red-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Pendientes</p>
+                            <p id="pendingTasks" class="text-3xl font-bold blue-text">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-card rounded-2xl p-6 backdrop-filter backdrop-blur-lg">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-spinner text-yellow-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">En Progreso</p>
+                            <p id="progressTasks" class="text-3xl font-bold blue-text">0</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-card rounded-2xl p-6 backdrop-filter backdrop-blur-lg">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                            <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Completadas</p>
+                            <p id="completedTasks" class="text-3xl font-bold blue-text">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="card rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold blue-text mb-6">
+                        <i class="fas fa-chart-pie mr-3 icon-blue"></i>
+                        Distribución de Tareas
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold blue-text mb-6">
+                        <i class="fas fa-chart-bar mr-3 icon-blue"></i>
+                        Tareas por Área
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="areaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="flex flex-wrap gap-4 mb-8">
+                <button onclick="openTaskModal()" 
+                        class="animated-button btn-primary text-white px-8 py-4 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-blue-300">
+                    <i class="fas fa-plus mr-3"></i>
+                    Nueva Tarea
+                </button>
+                
+                <button onclick="openImprovementModal()" 
+                        class="animated-button btn-secondary text-white px-8 py-4 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-purple-300">
+                    <i class="fas fa-lightbulb mr-3"></i>
+                    Propuesta de Mejora
+                </button>
+                
+                <button onclick="toggleCompletedTasks()" 
+                        class="animated-button btn-tertiary text-white px-8 py-4 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-green-300">
+                    <i class="fas fa-check-double mr-3"></i>
+                    <span id="completedButtonText">Ver Tareas Completadas</span>
+                </button>
+            </div>
+
+            <!-- Tabla de Tareas Activas -->
+            <div id="activeTasksSection" class="card rounded-2xl overflow-hidden">
+                <div class="px-8 py-6 border-b border-gray-200 blue-gradient-bg">
+                    <h3 class="text-xl font-semibold text-white">
+                        <i class="fas fa-tasks mr-3"></i>
+                        Tareas Activas
+                    </h3>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-8 py-4 text-left text-xs font-semibold blue-text uppercase tracking-wider">Tarea</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold blue-text uppercase tracking-wider">Área</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold blue-text uppercase tracking-wider">Persona Designada</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold blue-text uppercase tracking-wider">Estado</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold blue-text uppercase tracking-wider">Prioridad</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold blue-text uppercase tracking-wider">Comentarios</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold blue-text uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tasksTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Las tareas se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tabla de Tareas Completadas -->
+            <div id="completedTasksSection" class="hidden card rounded-2xl overflow-hidden mt-8 completed-section">
+                <div class="px-8 py-6 border-b border-emerald-200 bg-gradient-to-r from-emerald-600 to-emerald-700">
+                    <h3 class="text-xl font-semibold text-white">
+                        <i class="fas fa-check-double mr-3"></i>
+                        Tareas Completadas
+                    </h3>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-emerald-50">
+                            <tr>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-emerald-800 uppercase tracking-wider">Tarea</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-emerald-800 uppercase tracking-wider">Área</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-emerald-800 uppercase tracking-wider">Persona Designada</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-emerald-800 uppercase tracking-wider">Fecha Completada</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-emerald-800 uppercase tracking-wider">Prioridad</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-emerald-800 uppercase tracking-wider">Comentarios</th>
+                                <th class="px-8 py-4 text-left text-xs font-semibold text-emerald-800 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="completedTasksTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Las tareas completadas se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Propuestas de Mejora -->
+            <div class="card rounded-2xl mt-8">
+                <div class="px-8 py-6 border-b border-gray-200 blue-gradient-bg">
+                    <h3 class="text-xl font-semibold text-white">
+                        <i class="fas fa-lightbulb mr-3"></i>
+                        Propuestas de Mejora
+                    </h3>
+                </div>
+                
+                <div id="improvementsContainer" class="p-8">
+                    <!-- Las propuestas se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Nueva Tarea -->
+    <div id="taskModal" class="hidden fixed inset-0 modal z-50 flex items-center justify-center">
+        <div class="card rounded-3xl p-10 w-full max-w-3xl mx-4 fade-in">
+            <div class="flex justify-between items-center mb-10">
+                <h3 class="text-2xl font-semibold blue-text">
+                    <i class="fas fa-plus-circle mr-3 icon-blue"></i>
+                    Nueva Tarea
+                </h3>
+                <button onclick="closeTaskModal()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg blue-hover">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <form id="taskForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold blue-text mb-3">Nombre de la Tarea</label>
+                        <input type="text" id="taskName" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold blue-text mb-3">Área</label>
+                        <select id="taskArea" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                            <option value="">Seleccionar área</option>
+                            <option value="OPB (Oficina de Proceso de Billete)">OPB (Oficina de Proceso de Billete)</option>
+                            <option value="Oficina de Tintas">Oficina de Tintas</option>
+                            <option value="Rodillos y PT">Rodillos y PT</option>
+                            <option value="Oficina de Almacén">Oficina de Almacén</option>
+                            <option value="Oficina de Calidad">Oficina de Calidad</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold blue-text mb-3">Persona Designada</label>
+                        <input type="text" id="taskAssignee" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold blue-text mb-3">Prioridad</label>
+                        <select id="taskPriority" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent">
+                            <option value="">Seleccionar prioridad</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Media">Media</option>
+                            <option value="Baja">Baja</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold blue-text mb-3">Comentarios</label>
+                    <textarea id="taskComments" rows="4"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                              placeholder="Detalles adicionales sobre la tarea..."></textarea>
+                </div>
+                
+                <div class="flex justify-end space-x-4 pt-6">
+                    <button type="button" onclick="closeTaskModal()"
+                            class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                            class="animated-button btn-primary px-8 py-3 text-white rounded-xl font-semibold">
+                        <i class="fas fa-save mr-2"></i>
+                        Guardar Tarea
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Propuesta de Mejora -->
+    <div id="improvementModal" class="hidden fixed inset-0 modal z-50 flex items-center justify-center">
+        <div class="card rounded-3xl p-10 w-full max-w-3xl mx-4 fade-in">
+            <div class="flex justify-between items-center mb-10">
+                <h3 class="text-2xl font-semibold blue-text">
+                    <i class="fas fa-lightbulb mr-3 text-yellow-600"></i>
+                    Nueva Propuesta de Mejora
+                </h3>
+                <button onclick="closeImprovementModal()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg blue-hover">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <form id="improvementForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold blue-text mb-3">Título de la Propuesta</label>
+                    <input type="text" id="improvementTitle" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold blue-text mb-3">Descripción Detallada</label>
+                    <textarea id="improvementDescription" rows="5" required
+                              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                              placeholder="Describe tu propuesta de mejora..."></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold blue-text mb-3">Área Afectada</label>
+                        <select id="improvementArea" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                            <option value="">Seleccionar área</option>
+                            <option value="OPB (Oficina de Proceso de Billete)">OPB (Oficina de Proceso de Billete)</option>
+                            <option value="Oficina de Tintas">Oficina de Tintas</option>
+                            <option value="Rodillos y PT">Rodillos y PT</option>
+                            <option value="Oficina de Almacén">Oficina de Almacén</option>
+                            <option value="Oficina de Calidad">Oficina de Calidad</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold blue-text mb-3">Propuesto por</label>
+                        <input type="text" id="improvementAuthor" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-4 pt-6">
+                    <button type="button" onclick="closeImprovementModal()"
+                            class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                            class="animated-button bg-gradient-to-r from-yellow-500 to-yellow-600 px-8 py-3 text-white rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700">
+                        <i class="fas fa-save mr-2"></i>
+                        Guardar Propuesta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+        let improvements = JSON.parse(localStorage.getItem('improvements')) || [];
+        let statusChart, areaChart;
+        let showingCompleted = false;
+        const PASSWORD = "admin123"; // Cambiar por una contraseña segura
+
+        // Colores para las diferentes áreas
+        const areaColors = {
+            'OPB (Oficina de Proceso de Billete)': '#205192',
+            'Oficina de Tintas': '#dc2626',
+            'Rodillos y PT': '#16a34a',
+            'Oficina de Almacén': '#7c3aed',
+            'Oficina de Calidad': '#ea580c',
+            'General': '#64748b'
+        };
+
+        // Actualizar título dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            document.title = "Sistema de Gestión de Actividades";
+        });
+
+        // Funciones de autenticación
+        function login(event) {
+            event.preventDefault();
+            const password = document.getElementById('passwordInput').value;
+            
+            if (password === PASSWORD) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                document.title = "Sistema de Gestión de Actividades";
+                initDashboard();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('loginError').classList.add('hidden');
+                }, 3000);
+            }
+        }
+
+        function logout() {
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('passwordInput').value = '';
+            document.title = "Sistema de Gestión de Actividades";
+        }
+
+        // Inicialización del dashboard
+        function initDashboard() {
+            loadTasks();
+            loadCompletedTasks();
+            loadImprovements();
+            updateStatistics();
+            initCharts();
+            updateCharts();
+        }
+
+        // Gestión de tareas
+        function addTask(event) {
+            event.preventDefault();
+            
+            const task = {
+                id: Date.now(),
+                name: document.getElementById('taskName').value,
+                area: document.getElementById('taskArea').value,
+                assignee: document.getElementById('taskAssignee').value,
+                priority: document.getElementById('taskPriority').value,
+                status: 'Pendiente',
+                comments: document.getElementById('taskComments').value,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            tasks.push(task);
+            saveTasks();
+            loadTasks();
+            updateStatistics();
+            updateCharts();
+            closeTaskModal();
+            
+            showNotification('Tarea agregada exitosamente', 'success');
+        }
+
+        function changeTaskStatus(taskId, newStatus) {
+            const taskIndex = tasks.findIndex(task => task.id === taskId);
+            if (taskIndex !== -1) {
+                const task = tasks[taskIndex];
+                task.status = newStatus;
+                task.updatedAt = new Date().toISOString();
+                
+                // Si la tarea se marca como completada, moverla a la lista de completadas
+                if (newStatus === 'Completada') {
+                    task.completedAt = new Date().toISOString();
+                    completedTasks.push(task);
+                    tasks.splice(taskIndex, 1);
+                    saveCompletedTasks();
+                }
+                
+                saveTasks();
+                loadTasks();
+                loadCompletedTasks();
+                updateStatistics();
+                updateCharts();
+                showNotification('Estado de tarea actualizado', 'success');
+            }
+        }
+
+        function deleteTask(taskId) {
+            if (confirm('¿Está seguro de que desea eliminar esta tarea?')) {
+                tasks = tasks.filter(task => task.id !== taskId);
+                saveTasks();
+                loadTasks();
+                updateStatistics();
+                updateCharts();
+                showNotification('Tarea eliminada exitosamente', 'success');
+            }
+        }
+
+        function deleteCompletedTask(taskId) {
+            if (confirm('¿Está seguro de que desea eliminar esta tarea completada del historial?')) {
+                completedTasks = completedTasks.filter(task => task.id !== taskId);
+                saveCompletedTasks();
+                loadCompletedTasks();
+                updateStatistics();
+                updateCharts();
+                showNotification('Tarea eliminada del historial', 'success');
+            }
+        }
+
+        function restoreTask(taskId) {
+            const taskIndex = completedTasks.findIndex(task => task.id === taskId);
+            if (taskIndex !== -1) {
+                const task = completedTasks[taskIndex];
+                task.status = 'En Progreso';
+                task.updatedAt = new Date().toISOString();
+                delete task.completedAt;
+                
+                tasks.push(task);
+                completedTasks.splice(taskIndex, 1);
+                
+                saveTasks();
+                saveCompletedTasks();
+                loadTasks();
+                loadCompletedTasks();
+                updateStatistics();
+                updateCharts();
+                showNotification('Tarea restaurada exitosamente', 'success');
+            }
+        }
+
+        function loadTasks() {
+            const tbody = document.getElementById('tasksTable');
+            tbody.innerHTML = '';
+            
+            // Filtrar solo tareas no completadas
+            const activeTasks = tasks.filter(task => task.status !== 'Completada');
+            
+            activeTasks.forEach(task => {
+                const row = document.createElement('tr');
+                row.className = `task-row priority-${task.priority.toLowerCase()}`;
+                
+                const statusBadge = getStatusBadge(task.status);
+                const priorityBadge = getPriorityBadge(task.priority);
+                
+                row.innerHTML = `
+                    <td class="px-8 py-5 whitespace-nowrap">
+                        <div class="text-sm font-semibold blue-text">${task.name}</div>
+                        <div class="text-sm text-gray-500">Creado: ${new Date(task.createdAt).toLocaleDateString()}</div>
+                    </td>
+                    <td class="px-8 py-5 whitespace-nowrap">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-800">
+                            ${task.area}
+                        </span>
+                    </td>
+                    <td class="px-8 py-5 whitespace-nowrap text-sm font-medium blue-text">${task.assignee}</td>
+                    <td class="px-8 py-5 whitespace-nowrap">
+                        <select onchange="changeTaskStatus(${task.id}, this.value)" 
+                                class="text-xs rounded-full px-4 py-2 font-semibold ${statusBadge.class}">
+                            <option value="Pendiente" ${task.status === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                            <option value="En Progreso" ${task.status === 'En Progreso' ? 'selected' : ''}>En Progreso</option>
+                            <option value="Completada" ${task.status === 'Completada' ? 'selected' : ''}>Completada</option>
+                        </select>
+                    </td>
+                    <td class="px-8 py-5 whitespace-nowrap">${priorityBadge}</td>
+                    <td class="px-8 py-5 text-sm blue-text max-w-xs truncate">${task.comments || 'Sin comentarios'}</td>
+                    <td class="px-8 py-5 whitespace-nowrap text-sm font-medium">
+                        <button onclick="deleteTask(${task.id})" 
+                                class="text-red-600 hover:text-red-900 transition-colors p-2 rounded-lg hover:bg-red-50">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            if (activeTasks.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-8 py-16 text-center text-gray-500">
+                            <i class="fas fa-inbox text-5xl mb-4 text-gray-300"></i>
+                            <p class="text-lg font-medium">No hay tareas activas</p>
+                            <p class="text-sm">Agregue una nueva tarea para comenzar</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function loadCompletedTasks() {
+            const tbody = document.getElementById('completedTasksTable');
+            tbody.innerHTML = '';
+            
+            completedTasks.forEach(task => {
+                const row = document.createElement('tr');
+                row.className = 'completed-task-row';
+                
+                const priorityBadge = getPriorityBadge(task.priority);
+                
+                row.innerHTML = `
+                    <td class="px-8 py-5 whitespace-nowrap">
+                        <div class="text-sm font-semibold text-emerald-800">${task.name}</div>
+                        <div class="text-sm text-gray-500">Creado: ${new Date(task.createdAt).toLocaleDateString()}</div>
+                    </td>
+                    <td class="px-8 py-5 whitespace-nowrap">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                            ${task.area}
+                        </span>
+                    </td>
+                    <td class="px-8 py-5 whitespace-nowrap text-sm font-medium text-emerald-800">${task.assignee}</td>
+                    <td class="px-8 py-5 whitespace-nowrap text-sm text-emerald-800">${task.completedAt ? new Date(task.completedAt).toLocaleDateString() : 'N/A'}</td>
+                    <td class="px-8 py-5 whitespace-nowrap">${priorityBadge}</td>
+                    <td class="px-8 py-5 text-sm text-emerald-800 max-w-xs truncate">${task.comments || 'Sin comentarios'}</td>
+                    <td class="px-8 py-5 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-2">
+                            <button onclick="restoreTask(${task.id})" 
+                                    class="text-blue-600 hover:text-blue-900 transition-colors p-2 rounded-lg hover:bg-blue-50"
+                                    title="Restaurar tarea">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button onclick="deleteCompletedTask(${task.id})" 
+                                    class="text-red-600 hover:text-red-900 transition-colors p-2 rounded-lg hover:bg-red-50"
+                                    title="Eliminar del historial">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            if (completedTasks.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-8 py-16 text-center text-gray-500">
+                            <i class="fas fa-check-double text-5xl mb-4 text-gray-300"></i>
+                            <p class="text-lg font-medium">No hay tareas completadas</p>
+                            <p class="text-sm">Las tareas completadas aparecerán aquí</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function toggleCompletedTasks() {
+            const activeSection = document.getElementById('activeTasksSection');
+            const completedSection = document.getElementById('completedTasksSection');
+            const buttonText = document.getElementById('completedButtonText');
+            
+            if (showingCompleted) {
+                activeSection.classList.remove('hidden');
+                completedSection.classList.add('hidden');
+                buttonText.textContent = 'Ver Tareas Completadas';
+                showingCompleted = false;
+            } else {
+                activeSection.classList.add('hidden');
+                completedSection.classList.remove('hidden');
+                buttonText.textContent = 'Ver Tareas Activas';
+                showingCompleted = true;
+            }
+        }
+
+        // Gestión de propuestas de mejora
+        function addImprovement(event) {
+            event.preventDefault();
+            
+            const improvement = {
+                id: Date.now(),
+                title: document.getElementById('improvementTitle').value,
+                description: document.getElementById('improvementDescription').value,
+                area: document.getElementById('improvementArea').value,
+                author: document.getElementById('improvementAuthor').value,
+                status: 'Pendiente Revisión',
+                createdAt: new Date().toISOString()
+            };
+            
+            improvements.push(improvement);
+            saveImprovements();
+            loadImprovements();
+            closeImprovementModal();
+            showNotification('Propuesta de mejora agregada exitosamente', 'success');
+        }
+
+        function loadImprovements() {
+            const container = document.getElementById('improvementsContainer');
+            container.innerHTML = '';
+            
+            if (improvements.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <i class="fas fa-lightbulb text-5xl mb-4 text-gray-300"></i>
+                        <p class="text-lg font-medium">No hay propuestas de mejora registradas</p>
+                        <p class="text-sm">Agregue una nueva propuesta para comenzar</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            improvements.forEach(improvement => {
+                const improvementCard = document.createElement('div');
+                improvementCard.className = 'border border-gray-200 rounded-xl p-6 mb-6 hover:shadow-lg transition-all duration-300 hover:border-blue-300';
+                
+                improvementCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-bold text-lg blue-text">${improvement.title}</h4>
+                        <button onclick="deleteImprovement(${improvement.id})" 
+                                class="text-red-500 hover:text-red-700 transition-colors p-2 rounded-lg hover:bg-red-50">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-600 mb-4 leading-relaxed">${improvement.description}</p>
+                    <div class="flex flex-wrap gap-3 text-sm">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                            ${improvement.area}
+                        </span>
+                        <span class="blue-text font-medium">Por: ${improvement.author}</span>
+                        <span class="text-gray-500">• ${new Date(improvement.createdAt).toLocaleDateString()}</span>
+                    </div>
+                `;
+                
+                container.appendChild(improvementCard);
+            });
+        }
+
+        function deleteImprovement(improvementId) {
+            if (confirm('¿Está seguro de que desea eliminar esta propuesta?')) {
+                improvements = improvements.filter(improvement => improvement.id !== improvementId);
+                saveImprovements();
+                loadImprovements();
+                showNotification('Propuesta eliminada exitosamente', 'success');
+            }
+        }
+
+        // Funciones de estadísticas
+        function updateStatistics() {
+            const activeTasks = tasks.filter(task => task.status !== 'Completada');
+            const total = activeTasks.length + completedTasks.length;
+            const pending = activeTasks.filter(task => task.status === 'Pendiente').length;
+            const progress = activeTasks.filter(task => task.status === 'En Progreso').length;
+            const completed = completedTasks.length;
+            
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('pendingTasks').textContent = pending;
+            document.getElementById('progressTasks').textContent = progress;
+            document.getElementById('completedTasks').textContent = completed;
+        }
+
+        // Funciones de gráficos
+        function initCharts() {
+            // Gráfico de estado
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pendiente', 'En Progreso', 'Completada'],
+                    datasets: [{
+                        data: [0, 0, 0],
+                        backgroundColor: [
+                            '#fee2e2',
+                            '#fef3c7',
+                            '#dcfce7'
+                        ],
+                        borderWidth: 3,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de áreas
+            const areaCtx = document.getElementById('areaChart').getContext('2d');
+            areaChart = new Chart(areaCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Tareas por Área',
+                        data: [],
+                        backgroundColor: [],
+                        borderColor: [],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            const activeTasks = tasks.filter(task => task.status !== 'Completada');
+            const pending = activeTasks.filter(task => task.status === 'Pendiente').length;
+            const progress = activeTasks.filter(task => task.status === 'En Progreso').length;
+            const completed = completedTasks.length;
+            
+            statusChart.data.datasets[0].data = [pending, progress, completed];
+            statusChart.update();
+            
+            // Actualizar gráfico de áreas con colores dinámicos
+            const areaCount = {};
+            [...activeTasks, ...completedTasks].forEach(task => {
+                areaCount[task.area] = (areaCount[task.area] || 0) + 1;
+            });
+            
+            const areas = Object.keys(areaCount);
+            const counts = Object.values(areaCount);
+            const backgroundColors = areas.map(area => areaColors[area] || '#64748b');
+            const borderColors = areas.map(area => {
+                const color = areaColors[area] || '#64748b';
+                // Hacer el borde un poco más oscuro
+                return color.replace(')', ', 0.8)').replace('rgb', 'rgba');
+            });
+            
+            areaChart.data.labels = areas;
+            areaChart.data.datasets[0].data = counts;
+            areaChart.data.datasets[0].backgroundColor = backgroundColors;
+            areaChart.data.datasets[0].borderColor = borderColors;
+            areaChart.update();
+        }
+
+        // Funciones de utilidad
+        function getStatusBadge(status) {
+            const badges = {
+                'Pendiente': { class: 'status-pendiente', text: 'Pendiente' },
+                'En Progreso': { class: 'status-progreso', text: 'En Progreso' },
+                'Completada': { class: 'status-completada', text: 'Completada' }
+            };
+            return badges[status] || badges['Pendiente'];
+        }
+
+        function getPriorityBadge(priority) {
+            const badges = {
+                'Alta': '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">Alta</span>',
+                'Media': '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">Media</span>',
+                'Baja': '<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Baja</span>'
+            };
+            return badges[priority] || badges['Media'];
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-6 right-6 p-6 rounded-xl text-white z-50 fade-in shadow-xl ${
+                type === 'success' ? 'bg-emerald-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-600'
+            }`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'exclamation' : 'info'}-circle mr-3 text-lg"></i>
+                    <span class="font-semibold">${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Funciones de modal
+        function openTaskModal() {
+            document.getElementById('taskModal').classList.remove('hidden');
+        }
+
+        function closeTaskModal() {
+            document.getElementById('taskModal').classList.add('hidden');
+            document.getElementById('taskForm').reset();
+        }
+
+        function openImprovementModal() {
+            document.getElementById('improvementModal').classList.remove('hidden');
+        }
+
+        function closeImprovementModal() {
+            document.getElementById('improvementModal').classList.add('hidden');
+            document.getElementById('improvementForm').reset();
+        }
+
+        // Funciones de almacenamiento
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function saveCompletedTasks() {
+            localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+        }
+
+        function saveImprovements() {
+            localStorage.setItem('improvements', JSON.stringify(improvements));
+        }
+
+        // Event listeners
+        document.getElementById('loginForm').addEventListener('submit', login);
+        document.getElementById('taskForm').addEventListener('submit', addTask);
+        document.getElementById('improvementForm').addEventListener('submit', addImprovement);
+
+        // Cerrar modales al hacer clic fuera
+        document.getElementById('taskModal').addEventListener('click', function(e) {
+            if (e.target === this) closeTaskModal();
+        });
+
+        document.getElementById('improvementModal').addEventListener('click', function(e) {
+            if (e.target === this) closeImprovementModal();
+        });
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Datos de ejemplo para demostración
+            if (tasks.length === 0 && completedTasks.length === 0) {
+                tasks = [
+                    {
+                        id: 1,
+                        name: "Implementar sistema de control de calidad",
+                        area: "Oficina de Calidad",
+                        assignee: "Juan Pérez",
+                        priority: "Alta",
+                        status: "En Progreso",
+                        comments: "Revisar procedimientos actuales",
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    },
+                    {
+                        id: 2,
+                        name: "Actualización de inventario",
+                        area: "Oficina de Almacén",
+                        assignee: "María García",
+                        priority: "Media",
+                        status: "Pendiente",
+                        comments: "Revisar existencias actuales",
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    }
+                ];
+                
+                completedTasks = [
+                    {
+                        id: 3,
+                        name: "Configuración de nuevas tintas",
+                        area: "Oficina de Tintas",
+                        assignee: "Carlos López",
+                        priority: "Alta",
+                        status: "Completada",
+                        comments: "Tintas configuradas exitosamente",
+                        createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        completedAt: new Date().toISOString()
+                    }
+                ];
+                
+                saveTasks();
+                saveCompletedTasks();
+            }
+            
+            if (improvements.length === 0) {
+                improvements = [
+                    {
+                        id: 1,
+                        title: "Automatización de procesos de billete",
+                        description: "Implementar un sistema automatizado para optimizar el proceso de billetes y reducir tiempos de espera",
+                        area: "OPB (Oficina de Proceso de Billete)",
+                        author: "Ana Rodríguez",
+                        status: "Pendiente Revisión",
+                        createdAt: new Date().toISOString()
+                    }
+                ];
+                saveImprovements();
+            }
+        });
+    </script>
+</body>
+</html>
+
